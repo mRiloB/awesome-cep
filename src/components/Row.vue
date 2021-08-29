@@ -15,7 +15,6 @@ export default {
     },
     text: {
       type: String,
-      required: true,
     },
   },
 };
@@ -42,6 +41,6 @@ export default {
   }
 }
 .row:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 </style>

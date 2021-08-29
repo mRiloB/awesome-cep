@@ -1,18 +1,12 @@
 <template>
   <div id="app">
-      <router-view />
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
   name: "App",
-  data: () => ({
-    splash: true,
-  }),
-  mounted() {
-    setTimeout(() => this.splash = false, 2000);
-  },
 };
 </script>
 
@@ -28,7 +22,8 @@ $primary: #3cb44b;
   font-family: "Ubuntu", sans-serif;
 }
 
-html, body {
+html,
+body {
   background: $primary;
 }
 
@@ -36,5 +31,4 @@ html, body {
   height: 100%;
   padding: 10px;
 }
-
 </style>

@@ -9,40 +9,56 @@
         v-model="cep"
       />
       <button type="submit">
-        <img src="@/assets/search.png" alt="search icon" />
+        <Loader v-if="loading" />
+        <img v-else src="@/assets/search.png" alt="search icon" />
       </button>
     </form>
-    <CepInfo />
+    <CepInfo :info="info" />
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
 import CepInfo from "@/components/CepInfo.vue";
+import Loader from "@/components/Loader.vue";
+import getCep from "@/services/axios.js";
 
 export default {
   name: "Home",
-  components: {CepInfo},
+  components: { CepInfo, Loader },
   data: () => ({
     cep: "",
+    info: {},
+    loading: false,
   }),
   methods: {
-    onSubmit() {
+    async onSubmit() {
       const cep = this.cep;
-      if (!cep) return;
+      if (!cep) {
+        this.info = {};
+        return;
+      }
       if (cep.length !== 9) {
-        this.cepErrorAlert();
+        this.cepErrorAlert("error", "Oops...", "O CEP informado não é válido");
         return;
       }
 
-      // chamar api com os dados
+      try {
+        this.loading = true;
+        const res = await getCep(cep);
+        this.info = res;
+      } catch (err) {
+        this.cepErrorAlert("error", "Oops...", err.message || err);
+      } finally {
+        this.loading = false;
+      }
     },
 
-    cepErrorAlert() {
+    cepErrorAlert(icon, title, text) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "O CEP informado não é válido",
+        icon,
+        title,
+        text,
       });
     },
   },
