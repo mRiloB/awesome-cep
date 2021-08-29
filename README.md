@@ -1,4 +1,5 @@
 # awesome-cep
+Visit demo: [vue-cep](https://vue-cep.netlify.app/)
 
 ## Project setup
 ```
